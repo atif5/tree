@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
-# coding: utf-8
-
 import os
 import sys
 import colorama
+
+dirs = 0
+files = 0
 
 def lookahead(iterable):
     it = iter(iterable)
@@ -38,7 +38,10 @@ def traverse_dir(directory, index_map=None):
         print(out_string)
 
         if item.is_dir():
+            dirs += 1
             traverse_dir(item, index_map + [is_last])
+        else:
+            files += 1
     
 
 def main(argc, argv):
@@ -47,6 +50,7 @@ def main(argc, argv):
 
     print(argv[1])
     traverse_dir(argv[1], [])
+    print(f"{dirs} directorie(s), {files} file(s)")
     return 0
 
 if __name__ == '__main__':
