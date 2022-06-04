@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 # coding: utf-8
 
 import os
@@ -7,6 +7,7 @@ import colorama
 
 dirs = 0
 files = 0
+
 
 def lookahead(iterable):
     it = iter(iterable)
@@ -21,6 +22,7 @@ def lookahead(iterable):
         last = val
 
     yield last, True
+
 
 def traverse_dir(directory, index_map=None):
     global dirs, files
@@ -37,25 +39,27 @@ def traverse_dir(directory, index_map=None):
         for state in index_map:
             out_string += '│   ' if not state else '    '
 
-        color = colorama.Fore.MAGENTA if item.is_dir() else colorama.Fore.CYAN
+        color = colorama.Fore.MAGENTA if (
+            is_dir := item.is_dir()) else colorama.Fore.CYAN
         out_string += f'{"└──⩺" if is_last else "├──⩺"} {color}{item.name}{colorama.Style.RESET_ALL}'
         print(out_string)
 
-        if item.is_dir():
+        if is_dir:
             dirs += 1
             traverse_dir(item, index_map + [is_last])
         else:
             files += 1
-    
+
 
 def main(argc, argv):
     if argc < 2:
         return 1
 
-    print(argv[1])
+    print(colorama.Fore.MAGENTA+argv[1]+colorama.Style.RESET_ALL)
     traverse_dir(argv[1], [])
     print(f"{dirs} directorie(s), {files} file(s)")
     return 0
+
 
 if __name__ == '__main__':
     exit(main(len(sys.argv), sys.argv))
