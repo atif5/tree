@@ -55,7 +55,7 @@ def main(argc, argv):
     if argc < 2:
         return 1
 
-    print(colorama.Fore.MAGENTA+argv[1]+colorama.Style.RESET_ALL)
+    print(colorama.Fore.YELLOW+argv[1]+colorama.Style.RESET_ALL)
     traverse_dir(argv[1], [])
     print(f"{dirs} directorie(s), {files} file(s)")
     return 0
