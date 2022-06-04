@@ -20,6 +20,7 @@ def lookahead(iterable):
     yield last, True
 
 def traverse_dir(directory, index_map=None):
+    global dirs, files
     try:
         items = os.scandir(directory)
     except PermissionError:
