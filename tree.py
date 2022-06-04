@@ -1,3 +1,6 @@
+#/usr/bin/env python3
+# coding: utf-8
+
 import os
 import sys
 import colorama
@@ -35,7 +38,7 @@ def traverse_dir(directory, index_map=None):
             out_string += '│   ' if not state else '    '
 
         color = colorama.Fore.MAGENTA if item.is_dir() else colorama.Fore.CYAN
-        out_string += f'{"└──" if is_last else "├──"} {color}{item.name}{colorama.Style.RESET_ALL}'
+        out_string += f'{"└──⩺" if is_last else "├──⩺"} {color}{item.name}{colorama.Style.RESET_ALL}'
         print(out_string)
 
         if item.is_dir():
