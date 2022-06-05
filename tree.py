@@ -28,8 +28,12 @@ def traverse_dir(directory, index_map=None):
     global dirs, files
     try:
         items = os.scandir(directory)
+    except NotADirectoryError:
+        return f"{directory} is not a directory..."
+    except FileNotFoundError:
+        return f"No such directory: {directory}."
     except PermissionError:
-        return
+        return f"Access denied."
 
     for item, is_last in lookahead(items):
         if item is None or item.is_symlink() or item.name.startswith('.'):
@@ -49,6 +53,8 @@ def traverse_dir(directory, index_map=None):
             traverse_dir(item, index_map + [is_last])
         else:
             files += 1
+        
+    return f"{dirs} directorie(s), {files} file(s)"
 
 
 def main(argc, argv):
@@ -56,9 +62,8 @@ def main(argc, argv):
         return 1
 
     print(colorama.Fore.YELLOW+argv[1]+colorama.Style.RESET_ALL)
-    traverse_dir(argv[1], [])
-    print(f"{dirs} directorie(s), {files} file(s)")
-    return 0
+    result = traverse_dir(argv[1], [])
+    return result
 
 
 if __name__ == '__main__':
